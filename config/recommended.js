@@ -11,8 +11,8 @@ module.exports = {
   ],
   rules: {
     // Custom rules
-    'ember-bpr-lint/no-side-effect-cp': 2,
-    'ember-bpr-lint/no-attrs': 2,
-    'ember-bpr-lint/no-observers': 2
+    'ember-bpr-lint/no-timers': 2,
+    'ember-bpr-lint/no-unguarded-document': 2,
+    'ember-bpr-lint/no-unguarded-window': 2
   }
 };
