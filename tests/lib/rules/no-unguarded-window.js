@@ -115,11 +115,95 @@ ruleTester.run('no-unguarded-window', rule, {
       code: `
         import environment from 'ember-stdlib/utils/environment';
 
+        export default Ember.Component.extend({
+          guarded() {
+            if (environment.isBrowser() && this.get('otherCondition')) {
+              const location = window.location;
+            }
+          }
+        });`,
+      parserOptions: {
+        ecmaVersion: 6,
+        sourceType: 'module'
+      }
+    },
+    {
+      code: `
+        import environment from 'ember-stdlib/utils/environment';
+
+        export default Ember.Component.extend({
+          guarded() {
+            if (someOtherCondition() && environment.isBrowser() && this.get('otherCondition')) {
+              const location = window.location;
+            }
+          }
+        });`,
+      parserOptions: {
+        ecmaVersion: 6,
+        sourceType: 'module'
+      }
+    },
+    {
+      code: `
+        import environment from 'ember-stdlib/utils/environment';
+
+        export default Ember.Component.extend({
+          guarded() {
+            if (someOtherCondition() && environment.isBrowser() && this.get('otherCondition') || this.get('yetAnotherCondition')) {
+              const location = window.location;
+            }
+          }
+        });`,
+      parserOptions: {
+        ecmaVersion: 6,
+        sourceType: 'module'
+      }
+    },
+    {
+      code: `
+        import environment from 'ember-stdlib/utils/environment';
+
         let { isBrowser } = environment;
 
         export default Ember.Component.extend({
           guarded() {
             if (isBrowser()) {
+              const location = window.location;
+            }
+          }
+        });`,
+      parserOptions: {
+        ecmaVersion: 6,
+        sourceType: 'module'
+      }
+    },
+    {
+      code: `
+        import environment from 'ember-stdlib/utils/environment';
+
+        let { isBrowser } = environment;
+
+        export default Ember.Component.extend({
+          guarded() {
+            if (someCondition() && isBrowser()) {
+              const location = window.location;
+            }
+          }
+        });`,
+      parserOptions: {
+        ecmaVersion: 6,
+        sourceType: 'module'
+      }
+    },
+    {
+      code: `
+        import environment from 'ember-stdlib/utils/environment';
+
+        let { isBrowser } = environment;
+
+        export default Ember.Component.extend({
+          guarded() {
+            if (someCondition() && isBrowser() && this.get('otherCondition')) {
               const location = window.location;
             }
           }
