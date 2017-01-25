@@ -12,7 +12,6 @@ module.exports = {
   rules: {
     // Custom rules
     'ember-bpr-lint/no-timers': 2,
-    'ember-bpr-lint/no-unguarded-document': 2,
-    'ember-bpr-lint/no-unguarded-window': 2
+    'ember-bpr-lint/no-unguarded-globals': 2
   }
 };
