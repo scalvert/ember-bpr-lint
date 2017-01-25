@@ -268,9 +268,10 @@ ruleTester.run('no-unguarded-document', rule, {
         ecmaVersion: 6,
         sourceType: 'module'
       },
-      errors: [{
-        message: MESSAGE
-      }]
+      errors: [
+        { message: MESSAGE },
+        { message: MESSAGE }
+      ]
     },
     {
       code: `
@@ -283,9 +284,10 @@ ruleTester.run('no-unguarded-document', rule, {
         ecmaVersion: 6,
         sourceType: 'module'
       },
-      errors: [{
-        message: MESSAGE
-      }]
+      errors: [
+        { message: MESSAGE },
+        { message: MESSAGE }
+      ]
     },
     {
       code: `
@@ -301,6 +303,49 @@ ruleTester.run('no-unguarded-document', rule, {
               const node = document.querySelector('blah');
             }
           }
+        })`,
+      parserOptions: {
+        ecmaVersion: 6,
+        sourceType: 'module'
+      },
+      errors: [
+        { message: MESSAGE },
+        { message: MESSAGE }
+      ]
+    },
+    {
+      code: `
+        import Ember from 'ember';
+
+        export default Ember.Component.extend({
+          init() {
+            this._super(...arguments);
+
+            this.set('prop', {
+              foo: blah('boo', document.documentElement, true),
+            });
+          },
+        })`,
+      parserOptions: {
+        ecmaVersion: 6,
+        sourceType: 'module'
+      },
+      errors: [{
+        message: MESSAGE
+      }]
+    },
+    {
+      code: `
+        import Ember from 'ember';
+
+        export default Ember.Component.extend({
+          init() {
+            this._super(...arguments);
+
+            this.set('prop', {
+              foo: blah('boo', document, true),
+            });
+          },
         })`,
       parserOptions: {
         ecmaVersion: 6,
