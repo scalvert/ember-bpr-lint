@@ -12,6 +12,7 @@ Example 1:
 
 ```js
 import Ember from 'ember';
+import environment from 'ember-stdlib/utils/environment';
 
 Ember.component.extend({
   init() {
@@ -26,6 +27,7 @@ Example 2:
 
 ```js
 import Ember from 'ember';
+import environment from 'ember-stdlib/utils/environment';
 
 Ember.component.extend({
   init() {
