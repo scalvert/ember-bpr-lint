@@ -765,6 +765,25 @@ ruleTester.run('no-unguarded-globals', rule, {
       errors: [
         { message: WINDOW_MESSAGE }
       ]
+    },
+    {
+      code: `
+        import environment from 'ember-stdlib/utils/environment';
+
+        export default Ember.Component.extend({
+          conditionOrder() {
+            if (window.location && environment.isBrowser()) {
+              doStuff();
+            }
+          }
+        });`,
+      parserOptions: {
+        ecmaVersion: 6,
+        sourceType: 'module'
+      },
+      errors: [
+        { message: WINDOW_MESSAGE }
+      ]
     }
   ]
 });
