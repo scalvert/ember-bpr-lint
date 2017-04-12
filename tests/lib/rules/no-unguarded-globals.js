@@ -220,7 +220,7 @@ ruleTester.run('no-unguarded-globals', rule, {
       code: `
         import Ember from 'ember';
         import environment from 'ember-stdlib/utils/environment';
-        const { isBrowser } = environment 
+        const { isBrowser } = environment
 
         export default Ember.Component.extend({
           init() {
@@ -228,6 +228,36 @@ ruleTester.run('no-unguarded-globals', rule, {
             if (isBrowser()) {
               const location = window.location;
             }
+          }
+        });`,
+      parserOptions: {
+        ecmaVersion: 6,
+        sourceType: 'module'
+      }
+    },
+    {
+      code: `
+        import environment from 'ember-stdlib/utils/environment';
+
+        export default Ember.Component.extend({
+          shortCircuit() {
+            if (environment.isBrowser() && window.localStorage) {
+              return window.localStorage;
+            }
+          }
+        });`,
+      parserOptions: {
+        ecmaVersion: 6,
+        sourceType: 'module'
+      }
+    },
+    {
+      code: `
+        import environment from 'ember-stdlib/utils/environment';
+
+        export default Ember.Component.extend({
+          ternary() {
+            return (environment.isBrowser() && window.localStorage) ? window.localStorage : {};
           }
         });`,
       parserOptions: {
@@ -467,7 +497,7 @@ ruleTester.run('no-unguarded-globals', rule, {
       code: `
         import Ember from 'ember';
         import environment from 'ember-stdlib/utils/environment';
-        const { isBrowser } = environment 
+        const { isBrowser } = environment
 
         export default Ember.Component.extend({
           init() {
@@ -692,6 +722,42 @@ ruleTester.run('no-unguarded-globals', rule, {
             });
           },
         })`,
+      parserOptions: {
+        ecmaVersion: 6,
+        sourceType: 'module'
+      },
+      errors: [
+        { message: WINDOW_MESSAGE }
+      ]
+    },
+    {
+      code: `
+        import environment from 'ember-stdlib/utils/environment';
+
+        export default Ember.Component.extend({
+          shortCircuit() {
+            if (environment.isBrowser() || window.localStorage) {
+              return window.localStorage;
+            }
+          }
+        });`,
+      parserOptions: {
+        ecmaVersion: 6,
+        sourceType: 'module'
+      },
+      errors: [
+        { message: WINDOW_MESSAGE }
+      ]
+    },
+    {
+      code: `
+        import environment from 'ember-stdlib/utils/environment';
+
+        export default Ember.Component.extend({
+          ternary() {
+            return (environment.isBrowser()) ? {} : window.location;
+          }
+        });`,
       parserOptions: {
         ecmaVersion: 6,
         sourceType: 'module'
