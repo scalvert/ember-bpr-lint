@@ -500,10 +500,24 @@ ruleTester.run('no-unguarded-globals', rule, {
       parserOptions: {
         ecmaVersion: 6,
         sourceType: 'module'
-      },
-      errors: [{
-        message: DOCUMENT_MESSAGE
-      }]
+      }
+    },
+    {
+      code: `
+        import environment from 'ember-stdlib/utils/environment';
+
+        export default Ember.Component.extend({
+          init() {
+            this._super(...arguments);
+            if (environment.isBrowser() && window.localStorage) {
+              let unusefulAssignment = true;
+            }
+          }
+        })`,
+      parserOptions: {
+        ecmaVersion: 6,
+        sourceType: 'module'
+      }
     }
   ],
   invalid: [
