@@ -1,6 +1,6 @@
 {
   "name": "eslint-plugin-ember-bpr-lint",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "description": "Eslint rules for linting BPR specific patterns.",
   "main": "lib/index.js",
   "directories": {
