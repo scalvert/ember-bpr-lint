@@ -1,7 +1,12 @@
 const rule = require('../../../lib/rules/no-unguarded-globals');
 const getMessage = rule.meta.message;
 const RuleTester = require('eslint').RuleTester;
-const ruleTester = new RuleTester();
+const ruleTester = new RuleTester({
+  parserOptions: {
+    ecmaVersion: 6,
+    sourceType: 'module'
+  }
+});
 
 const WINDOW_MESSAGE = getMessage('window');
 const DOCUMENT_MESSAGE = getMessage('document');
@@ -20,11 +25,7 @@ ruleTester.run('no-unguarded-globals', rule, {
               }
             }
           }
-        });`,
-      parserOptions: {
-        ecmaVersion: 6,
-        sourceType: 'module'
-      }
+        });`
     },
     {
       code: `
@@ -36,11 +37,7 @@ ruleTester.run('no-unguarded-globals', rule, {
               const location = window.location;
             }
           }
-        });`,
-      parserOptions: {
-        ecmaVersion: 6,
-        sourceType: 'module'
-      }
+        });`
     },
     {
       code: `
@@ -50,11 +47,7 @@ ruleTester.run('no-unguarded-globals', rule, {
           willRender() {
             const location = window.location;
           }
-        });`,
-      parserOptions: {
-        ecmaVersion: 6,
-        sourceType: 'module'
-      }
+        });`
     },
     {
       code: `
@@ -64,11 +57,7 @@ ruleTester.run('no-unguarded-globals', rule, {
           didRender() {
             const location = window.location;
           }
-        });`,
-      parserOptions: {
-        ecmaVersion: 6,
-        sourceType: 'module'
-      }
+        });`
     },
     {
       code: `
@@ -78,11 +67,7 @@ ruleTester.run('no-unguarded-globals', rule, {
           willInsertElement() {
             const location = window.location;
           }
-        });`,
-      parserOptions: {
-        ecmaVersion: 6,
-        sourceType: 'module'
-      }
+        });`
     },
     {
       code: `
@@ -92,11 +77,7 @@ ruleTester.run('no-unguarded-globals', rule, {
           didInsertElement() {
             const location = window.location;
           }
-        });`,
-      parserOptions: {
-        ecmaVersion: 6,
-        sourceType: 'module'
-      }
+        });`
     },
     {
       code: `
@@ -108,11 +89,7 @@ ruleTester.run('no-unguarded-globals', rule, {
               const location = window.location;
             }
           }
-        });`,
-      parserOptions: {
-        ecmaVersion: 6,
-        sourceType: 'module'
-      }
+        });`
     },
     {
       code: `
@@ -124,11 +101,7 @@ ruleTester.run('no-unguarded-globals', rule, {
               const location = window.location;
             }
           }
-        });`,
-      parserOptions: {
-        ecmaVersion: 6,
-        sourceType: 'module'
-      }
+        });`
     },
     {
       code: `
@@ -140,11 +113,7 @@ ruleTester.run('no-unguarded-globals', rule, {
               const location = window.location;
             }
           }
-        });`,
-      parserOptions: {
-        ecmaVersion: 6,
-        sourceType: 'module'
-      }
+        });`
     },
     {
       code: `
@@ -156,11 +125,7 @@ ruleTester.run('no-unguarded-globals', rule, {
               const location = window.location;
             }
           }
-        });`,
-      parserOptions: {
-        ecmaVersion: 6,
-        sourceType: 'module'
-      }
+        });`
     },
     {
       code: `
@@ -174,11 +139,7 @@ ruleTester.run('no-unguarded-globals', rule, {
               const location = window.location;
             }
           }
-        });`,
-      parserOptions: {
-        ecmaVersion: 6,
-        sourceType: 'module'
-      }
+        });`
     },
     {
       code: `
@@ -192,11 +153,7 @@ ruleTester.run('no-unguarded-globals', rule, {
               const location = window.location;
             }
           }
-        });`,
-      parserOptions: {
-        ecmaVersion: 6,
-        sourceType: 'module'
-      }
+        });`
     },
     {
       code: `
@@ -210,17 +167,13 @@ ruleTester.run('no-unguarded-globals', rule, {
               const location = window.location;
             }
           }
-        });`,
-      parserOptions: {
-        ecmaVersion: 6,
-        sourceType: 'module'
-      }
+        });`
     },
     {
       code: `
         import Ember from 'ember';
         import environment from 'ember-stdlib/utils/environment';
-        const { isBrowser } = environment 
+        const { isBrowser } = environment
 
         export default Ember.Component.extend({
           init() {
@@ -229,11 +182,7 @@ ruleTester.run('no-unguarded-globals', rule, {
               const location = window.location;
             }
           }
-        });`,
-      parserOptions: {
-        ecmaVersion: 6,
-        sourceType: 'module'
-      }
+        });`
     },
     {
       code: `
@@ -249,11 +198,7 @@ ruleTester.run('no-unguarded-globals', rule, {
               let attackUnsuspectingLoser = true;
             }
           }
-        })`,
-      parserOptions: {
-        ecmaVersion: 6,
-        sourceType: 'module'
-      }
+        })`
     },
     {
       code: `
@@ -267,11 +212,7 @@ ruleTester.run('no-unguarded-globals', rule, {
               }
             }
           }
-        });`,
-      parserOptions: {
-        ecmaVersion: 6,
-        sourceType: 'module'
-      }
+        });`
     },
     {
       code: `
@@ -283,11 +224,7 @@ ruleTester.run('no-unguarded-globals', rule, {
               const node = document.querySelector('blah');
             }
           }
-        });`,
-      parserOptions: {
-        ecmaVersion: 6,
-        sourceType: 'module'
-      }
+        });`
     },
     {
       code: `
@@ -297,11 +234,7 @@ ruleTester.run('no-unguarded-globals', rule, {
           willRender() {
             const node = document.querySelector('blah');
           }
-        });`,
-      parserOptions: {
-        ecmaVersion: 6,
-        sourceType: 'module'
-      }
+        });`
     },
     {
       code: `
@@ -311,11 +244,7 @@ ruleTester.run('no-unguarded-globals', rule, {
           didRender() {
             const node = document.querySelector('blah');
           }
-        });`,
-      parserOptions: {
-        ecmaVersion: 6,
-        sourceType: 'module'
-      }
+        });`
     },
     {
       code: `
@@ -325,11 +254,7 @@ ruleTester.run('no-unguarded-globals', rule, {
           willInsertElement() {
             const node = document.querySelector('blah');
           }
-        });`,
-      parserOptions: {
-        ecmaVersion: 6,
-        sourceType: 'module'
-      }
+        });`
     },
     {
       code: `
@@ -339,11 +264,7 @@ ruleTester.run('no-unguarded-globals', rule, {
           didInsertElement() {
             const node = document.querySelector('blah');
           }
-        });`,
-      parserOptions: {
-        ecmaVersion: 6,
-        sourceType: 'module'
-      }
+        });`
     },
     {
       code: `
@@ -355,11 +276,7 @@ ruleTester.run('no-unguarded-globals', rule, {
                 const node = document.querySelector('blah');
               }
           }
-        });`,
-      parserOptions: {
-        ecmaVersion: 6,
-        sourceType: 'module'
-      }
+        });`
     },
     {
       code: `
@@ -371,11 +288,7 @@ ruleTester.run('no-unguarded-globals', rule, {
                 const node = document.querySelector('blah');
               }
           }
-        });`,
-      parserOptions: {
-        ecmaVersion: 6,
-        sourceType: 'module'
-      }
+        });`
     },
     {
       code: `
@@ -387,11 +300,7 @@ ruleTester.run('no-unguarded-globals', rule, {
                 const node = document.querySelector('blah');
               }
           }
-        });`,
-      parserOptions: {
-        ecmaVersion: 6,
-        sourceType: 'module'
-      }
+        });`
     },
     {
       code: `
@@ -403,11 +312,7 @@ ruleTester.run('no-unguarded-globals', rule, {
                 const node = document.querySelector('blah');
               }
           }
-        });`,
-      parserOptions: {
-        ecmaVersion: 6,
-        sourceType: 'module'
-      }
+        });`
     },
     {
       code: `
@@ -421,11 +326,7 @@ ruleTester.run('no-unguarded-globals', rule, {
               const node = document.querySelector('blah');
             }
           }
-        });`,
-      parserOptions: {
-        ecmaVersion: 6,
-        sourceType: 'module'
-      }
+        });`
     },
     {
       code: `
@@ -439,11 +340,7 @@ ruleTester.run('no-unguarded-globals', rule, {
               const node = document.querySelector('blah');
             }
           }
-        });`,
-      parserOptions: {
-        ecmaVersion: 6,
-        sourceType: 'module'
-      }
+        });`
     },
     {
       code: `
@@ -457,17 +354,13 @@ ruleTester.run('no-unguarded-globals', rule, {
               const node = document.querySelector('blah');
             }
           }
-        });`,
-      parserOptions: {
-        ecmaVersion: 6,
-        sourceType: 'module'
-      }
+        });`
     },
     {
       code: `
         import Ember from 'ember';
         import environment from 'ember-stdlib/utils/environment';
-        const { isBrowser } = environment 
+        const { isBrowser } = environment
 
         export default Ember.Component.extend({
           init() {
@@ -476,11 +369,7 @@ ruleTester.run('no-unguarded-globals', rule, {
               const node = document.querySelector('blah');
             }
           }
-        });`,
-      parserOptions: {
-        ecmaVersion: 6,
-        sourceType: 'module'
-      }
+        });`
     },
     {
       code: `
@@ -497,10 +386,6 @@ ruleTester.run('no-unguarded-globals', rule, {
             }
           }
         })`,
-      parserOptions: {
-        ecmaVersion: 6,
-        sourceType: 'module'
-      },
       errors: [{
         message: DOCUMENT_MESSAGE
       }]
@@ -514,10 +399,6 @@ ruleTester.run('no-unguarded-globals', rule, {
             const node = document.querySelector('blah');
           }
         });`,
-      parserOptions: {
-        ecmaVersion: 6,
-        sourceType: 'module'
-      },
       errors: [
         { message: DOCUMENT_MESSAGE },
         { message: DOCUMENT_MESSAGE }
@@ -530,10 +411,6 @@ ruleTester.run('no-unguarded-globals', rule, {
             const node = document.querySelector('blah');
           }
         });`,
-      parserOptions: {
-        ecmaVersion: 6,
-        sourceType: 'module'
-      },
       errors: [
         { message: DOCUMENT_MESSAGE },
         { message: DOCUMENT_MESSAGE }
@@ -554,10 +431,6 @@ ruleTester.run('no-unguarded-globals', rule, {
             }
           }
         })`,
-      parserOptions: {
-        ecmaVersion: 6,
-        sourceType: 'module'
-      },
       errors: [
         { message: DOCUMENT_MESSAGE },
         { message: DOCUMENT_MESSAGE }
@@ -576,10 +449,6 @@ ruleTester.run('no-unguarded-globals', rule, {
             });
           },
         })`,
-      parserOptions: {
-        ecmaVersion: 6,
-        sourceType: 'module'
-      },
       errors: [{
         message: DOCUMENT_MESSAGE
       }]
@@ -597,10 +466,6 @@ ruleTester.run('no-unguarded-globals', rule, {
             });
           },
         })`,
-      parserOptions: {
-        ecmaVersion: 6,
-        sourceType: 'module'
-      },
       errors: [{
         message: DOCUMENT_MESSAGE
       }]
@@ -612,10 +477,6 @@ ruleTester.run('no-unguarded-globals', rule, {
             const location = window.location;
           }
         });`,
-      parserOptions: {
-        ecmaVersion: 6,
-        sourceType: 'module'
-      },
       errors: [
         { message: WINDOW_MESSAGE }
       ]
@@ -627,10 +488,6 @@ ruleTester.run('no-unguarded-globals', rule, {
             const location = window.location;
           }
         });`,
-      parserOptions: {
-        ecmaVersion: 6,
-        sourceType: 'module'
-      },
       errors: [
         { message: WINDOW_MESSAGE }
       ]
@@ -650,10 +507,6 @@ ruleTester.run('no-unguarded-globals', rule, {
             }
           }
         })`,
-      parserOptions: {
-        ecmaVersion: 6,
-        sourceType: 'module'
-      },
       errors: [
         { message: WINDOW_MESSAGE }
       ]
@@ -671,10 +524,6 @@ ruleTester.run('no-unguarded-globals', rule, {
             });
           },
         })`,
-      parserOptions: {
-        ecmaVersion: 6,
-        sourceType: 'module'
-      },
       errors: [
         { message: WINDOW_MESSAGE }
       ]
@@ -692,10 +541,6 @@ ruleTester.run('no-unguarded-globals', rule, {
             });
           },
         })`,
-      parserOptions: {
-        ecmaVersion: 6,
-        sourceType: 'module'
-      },
       errors: [
         { message: WINDOW_MESSAGE }
       ]
