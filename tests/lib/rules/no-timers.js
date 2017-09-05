@@ -1,7 +1,12 @@
 const rule = require('../../../lib/rules/no-timers');
 const MESSAGE = rule.meta.message;
 const RuleTester = require('eslint').RuleTester;
-const ruleTester = new RuleTester();
+const ruleTester = new RuleTester({
+  parserOptions: {
+    ecmaVersion: 6,
+    sourceType: 'module'
+  }
+});
 
 ruleTester.run('no-timers', rule, {
   valid: [
@@ -13,11 +18,7 @@ ruleTester.run('no-timers', rule, {
               setTimeout(() => {});
             }
           }
-        });`,
-      parserOptions: {
-        ecmaVersion: 6,
-        sourceType: 'module'
-      }
+        });`
     },
     {
       code: `
@@ -27,11 +28,7 @@ ruleTester.run('no-timers', rule, {
               setTimeout(() => {});
             }
           }
-        });`,
-      parserOptions: {
-        ecmaVersion: 6,
-        sourceType: 'module'
-      }
+        });`
     },
     {
       code: `
@@ -41,11 +38,7 @@ ruleTester.run('no-timers', rule, {
               setInterval(() => {});
             }
           }
-        });`,
-      parserOptions: {
-        ecmaVersion: 6,
-        sourceType: 'module'
-      }
+        });`
     }
   ],
   invalid: [
@@ -56,10 +49,6 @@ ruleTester.run('no-timers', rule, {
             setTimeout(() => {});
           }
         });`,
-      parserOptions: {
-        ecmaVersion: 6,
-        sourceType: 'module'
-      },
       errors: [{
         message: MESSAGE
       }]
@@ -71,10 +60,6 @@ ruleTester.run('no-timers', rule, {
             setInterval(() => {});
           }
         });`,
-      parserOptions: {
-        ecmaVersion: 6,
-        sourceType: 'module'
-      },
       errors: [{
         message: MESSAGE
       }]
@@ -86,10 +71,7 @@ ruleTester.run('no-timers', rule, {
             window.setTimeout(() => {});
           }
         });`,
-      parserOptions: {
-        ecmaVersion: 6,
-        sourceType: 'module'
-      },
+
       errors: [{
         message: MESSAGE
       }]
@@ -101,10 +83,6 @@ ruleTester.run('no-timers', rule, {
             window.setInterval(() => {});
           }
         });`,
-      parserOptions: {
-        ecmaVersion: 6,
-        sourceType: 'module'
-      },
       errors: [{
         message: MESSAGE
       }]
