@@ -186,6 +186,36 @@ ruleTester.run('no-unguarded-globals', rule, {
     },
     {
       code: `
+        import environment from 'ember-stdlib/utils/environment';
+
+        export default Ember.Component.extend({
+          shortCircuit() {
+            if (environment.isBrowser() && window.localStorage) {
+              return window.localStorage;
+            }
+          }
+        });`,
+      parserOptions: {
+        ecmaVersion: 6,
+        sourceType: 'module'
+      }
+    },
+    {
+      code: `
+        import environment from 'ember-stdlib/utils/environment';
+
+        export default Ember.Component.extend({
+          ternary() {
+            return (environment.isBrowser() && window.localStorage) ? window.localStorage : {};
+          }
+        });`,
+      parserOptions: {
+        ecmaVersion: 6,
+        sourceType: 'module'
+      }
+    },
+    {
+      code: `
         import Ember from 'ember';
         let troll = {
           isBrowser() { return 'under bridge' }
@@ -680,6 +710,61 @@ ruleTester.run('no-unguarded-globals', rule, {
             return isBrowser() || window;
           }
         });`,
+      errors: [
+        { message: WINDOW_MESSAGE }
+      ]
+    },
+    {
+      code: `
+        import environment from 'ember-stdlib/utils/environment';
+
+        export default Ember.Component.extend({
+          shortCircuit() {
+            if (environment.isBrowser() || window.localStorage) {
+              return window.localStorage;
+            }
+          }
+        });`,
+      parserOptions: {
+        ecmaVersion: 6,
+        sourceType: 'module'
+      },
+      errors: [
+        { message: WINDOW_MESSAGE }
+      ]
+    },
+    {
+      code: `
+        import environment from 'ember-stdlib/utils/environment';
+
+        export default Ember.Component.extend({
+          ternary() {
+            return (environment.isBrowser()) ? {} : window.location;
+          }
+        });`,
+      parserOptions: {
+        ecmaVersion: 6,
+        sourceType: 'module'
+      },
+      errors: [
+        { message: WINDOW_MESSAGE }
+      ]
+    },
+    {
+      code: `
+        import environment from 'ember-stdlib/utils/environment';
+
+        export default Ember.Component.extend({
+          conditionOrder() {
+            if (window.location && environment.isBrowser()) {
+              doStuff();
+            }
+          }
+        });`,
+      parserOptions: {
+        ecmaVersion: 6,
+        sourceType: 'module'
+      },
       errors: [
         { message: WINDOW_MESSAGE }
       ]
