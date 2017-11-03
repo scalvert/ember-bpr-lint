@@ -389,6 +389,56 @@ ruleTester.run('no-unguarded-globals', rule, {
       errors: [{
         message: DOCUMENT_MESSAGE
       }]
+    },
+    {
+      code: `
+        import environment from 'ember-stdlib/utils/environment';
+
+        export default Ember.Component.extend({
+          shortCircuit() {
+            if (environment.isBrowser() && window.localStorage) {
+              return window.localStorage;
+            }
+          }
+        });`
+    },
+    {
+      code: `
+        import environment from 'ember-stdlib/utils/environment';
+        const { isBrowser } = environment
+
+        export default Ember.Component.extend({
+          shortCircuit() {
+            if (isBrowser() && window.localStorage) {
+              return window.localStorage;
+            }
+          }
+        });`
+    },
+    {
+      code: `
+        import environment from 'ember-stdlib/utils/environment';
+
+        export default Ember.Component.extend({
+          isInBrowser() {
+            if (environment.isBrowser() || window) {
+              return true;
+            }
+          }
+        });`
+    },
+    {
+      code: `
+        import environment from 'ember-stdlib/utils/environment';
+        const { isBrowser } = environment;
+
+        export default Ember.Component.extend({
+          isInBrowser() {
+            if (isBrowser() || window) {
+              return true;
+            }
+          }
+        });`
     }
   ],
   invalid: [
@@ -541,6 +591,95 @@ ruleTester.run('no-unguarded-globals', rule, {
             });
           },
         })`,
+      errors: [
+        { message: WINDOW_MESSAGE }
+      ]
+    },
+    {
+      code: `
+        import environment from 'ember-stdlib/utils/environment';
+
+        export default Ember.Component.extend({
+          shortCircuit() {
+            if (environment.isBrowser() || window.localStorage) {
+              return window.localStorage;
+            }
+          }
+        });`,
+      errors: [
+        { message: WINDOW_MESSAGE }
+      ]
+    },
+    {
+      code: `
+        import environment from 'ember-stdlib/utils/environment';
+        const { isBrowser } = environment;
+
+        export default Ember.Component.extend({
+          shortCircuit() {
+            if (isBrowser() || window.localStorage) {
+              return window.localStorage;
+            }
+          }
+        });`,
+      errors: [
+        { message: WINDOW_MESSAGE }
+      ]
+    },
+    {
+      code: `
+        import environment from 'ember-stdlib/utils/environment';
+
+        export default Ember.Component.extend({
+          conditionOrder() {
+            if (window.location && environment.isBrowser()) {
+              doStuff();
+            }
+          }
+        });`,
+      errors: [
+        { message: WINDOW_MESSAGE }
+      ]
+    },
+    {
+      code: `
+        import environment from 'ember-stdlib/utils/environment';
+        const { isBrowser } = environment;
+
+        export default Ember.Component.extend({
+          conditionOrder() {
+            if (window.location && isBrowser()) {
+              doStuff();
+            }
+          }
+        });`,
+      errors: [
+        { message: WINDOW_MESSAGE }
+      ]
+    },
+    {
+      code: `
+        import environment from 'ember-stdlib/utils/environment';
+
+        export default Ember.Component.extend({
+          badFunc() {
+            return environment.isBrowser() || window;
+          }
+        });`,
+      errors: [
+        { message: WINDOW_MESSAGE }
+      ]
+    },
+    {
+      code: `
+        import environment from 'ember-stdlib/utils/environment';
+        const { isBrowser } = environment;
+
+        export default Ember.Component.extend({
+          badFunc() {
+            return isBrowser() || window;
+          }
+        });`,
       errors: [
         { message: WINDOW_MESSAGE }
       ]
