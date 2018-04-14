@@ -23,9 +23,9 @@
     "eslint-plugin"
   ],
   "devDependencies": {
-    "eslint": "^3.11.1",
-    "mocha": "^3.2.0",
-    "mocha-eslint": "^3.0.1"
+    "eslint": "^4.19.1",
+    "mocha": "^5.1.0",
+    "mocha-eslint": "^4.1.0"
   },
   "dependencies": {
     "requireindex": "^1.1.0"
