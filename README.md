@@ -1,5 +1,7 @@
 # Ember BPR Lint
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/scalvert/ember-bpr-lint.svg)](https://greenkeeper.io/)
+
 _Adds linting rules specific to BPR anti-patterns._
 
 Table of Contents
